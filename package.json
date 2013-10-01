@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "preinstall": "git submodule update -i -r"
+    "preinstall": "git submodule update --init"
   },
   "licenses": [
     {
