@@ -28,7 +28,7 @@ function _fileNameGetter(_root, selector) {
     // Possibly use selector here for filename
     selector = selector.replace(/[\#\.\s:>]/g,'');
 
-    var name = _root + "/" + platform + "_" + webdriver.desiredCapabilities.browserName + '_' + selector + '_' + _count++;
+    var name = _root + "/" + platform + "_" + webdriver.desiredCapabilities.browserName + '_' + selector;
 
     if (fs.existsSync(name + '.png')) {
         return name + '.diff.png';
@@ -111,7 +111,8 @@ function compare(filename, callback) {
             if (code === 0) {
                 callback();
             } else {
-                callback.fail(new Error("Images don't match"));
+                console.log('Image comparison failed for: ' + filename);
+                callback();
             }
         });
     }
