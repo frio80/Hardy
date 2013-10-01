@@ -22,8 +22,7 @@
     "hardy": "./bin/hardy"
   },
   "scripts": {
-    "test": "grunt test",
-    "preinstall": "git submodule update --init"
+    "test": "grunt test"
   },
   "licenses": [
     {
