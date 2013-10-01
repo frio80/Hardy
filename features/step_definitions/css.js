@@ -188,7 +188,7 @@ module.exports = function() {
                 return callback.fail(err);
             }
             if (result.status === 'firstrun') {
-                console.log("First time this test has been run. New test cases have been created.");
+                console.log("First time this test - " + elementName + " - has been run. Baseline created");
                 return callback();
             }
             imageTest.compare(result.value, callback);

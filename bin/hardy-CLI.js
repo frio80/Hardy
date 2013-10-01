@@ -25,7 +25,6 @@ function hardyCLI() {
         console.log('Hardy v' + VERSION);
 
         PROPERTIES = properties || argParser(process.argv);
-
         // If we've failed for some reason
         if (PROPERTIES.fail) {
             printMessageAndExit('', 1, true);
@@ -133,7 +132,6 @@ function hardyCLI() {
         } else {
             process.argv.forEach(function(arg) {
                 arg = arg.match(/^--([A-Za-z]+)=(.*)/);
-
                 // Only look for --[PROPERTY] style args, everything else can be forgotten
                 if (arg === null || !arg[1]) return;
 
@@ -150,12 +148,11 @@ function hardyCLI() {
             });
 
             testFolder = process.argv[process.argv.length - 1];
-            testPath = path.resolve(testFolder);
+            testPath = PROPERTIES.basePath ? PROPERTIES.basePath : path.resolve(testFolder);
             browsersToTest = PROPERTIES.browser.split(',');
             numberOfRuns = browsersToTest.length;
             currentRun = 0;
             exitCode = 0;
-
             browsersToTest.forEach(buildChildProcess);
         }
     }
@@ -194,7 +191,7 @@ function hardyCLI() {
         optionsArray.push("--testPath=" + testPath);
 
         // Where to find our *.feature files
-        optionsArray.push(testPath);
+        optionsArray.push(testPath + testFolder);
 
         command = hardyPath + 'node_modules/cucumber/bin/cucumber.js';
         environment = {
