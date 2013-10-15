@@ -148,7 +148,7 @@ function hardyCLI() {
             });
 
             testFolder = process.argv[process.argv.length - 1];
-            testPath = PROPERTIES.basePath ? PROPERTIES.basePath : path.resolve(testFolder);
+            testPath = PROPERTIES.testPath ? PROPERTIES.testPath : path.resolve(testFolder);
             browsersToTest = PROPERTIES.browser.split(',');
             numberOfRuns = browsersToTest.length;
             currentRun = 0;

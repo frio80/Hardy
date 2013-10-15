@@ -6,7 +6,7 @@ module.exports = function (argv) {
         fail: false,
         browser: 'firefox',
         logLevel: 'silent',
-	basePath: ''
+        testPath: ''
     };
 
     // Cannot run hardy without arguments
