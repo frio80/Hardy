@@ -12,6 +12,7 @@ var webdriver;
 var exitStatus;
 var platform = require('os').platform();
 var _processRoot = process.cwd();
+var _failOnFirstMismatch = true;
 
 exports.screenshot = screenshot;
 exports.compare = compare;
@@ -21,7 +22,15 @@ function init(options) {
     webdriver = options.webdriver || {};
     _root = options.screenshotRoot || _root;
     _processRoot = options.processRoot || _processRoot;
-    _fileNameGetter = options.fileNameGetter || _fileNameGetter;
+    _fileNameGetter = _fileNameGetter;
+
+    if (options.fileNameGetter) {
+        _fileNameGetter = options.fileNameGetter.apply(this, [platform, webdriver, fs]);
+    }
+
+    _failOnFirstMismatch = typeof options.failOnFirstMismatch !== "undefined" ?
+                               options.failOnFirstMismatch :
+                               _failOnFirstMismatch;
 }
 
 function _fileNameGetter(_root, selector) {
@@ -110,8 +119,11 @@ function compare(filename, callback) {
         imgdf.on('exit', function(code) {
             if (code === 0) {
                 callback();
-            } else {
+            } else if (_failOnFirstMismatch) {
                 callback.fail(new Error("Images don't match: " + filename));
+            } else {
+                console.log("Images don't match: " + filename);
+                callback();
             }
         });
     }
